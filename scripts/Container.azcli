@@ -21,7 +21,7 @@ docker push cybercomdemo1acr.azurecr.io/activityreader:1.0
 docker login cybercomdemo1acr.azurecr.io
 Username: cybercomdemo1acr
 Password: <ta från azure portal> / nJlgrZQW2oNU082q3=KMAuX0sONbTuJa
-docker pull cybercomdemo1acr.azurecr.io/consoleapp1:3.0
+docker pull cybercomdemo1acr.azurecr.io/activityreader:1.0
 
 
 # container instance - Powershell
