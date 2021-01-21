@@ -1,0 +1,26 @@
+# Run in Bash
+
+az login
+az account list
+az account set --subscription <your subscription id> # If you have >1 - choose the right one
+
+az group create --location "westeurope" --name "cybercomdemogrp1" --tags Customer=Jan-Erik Type=Demo
+
+az storage account create -n "cybercomdemostorage1" -g "cybercomdemogrp1" --kind StorageV2 -l "westeurope"
+
+STORAGEKEY=$(az storage account keys list --resource-group "cybercomdemogrp1" --account-name "cybercomdemostorage1" --query "[0].value" | tr -d '"')
+
+
+az storage container create --name "private1" --resource-group "cybercomdemogrp1" --account-name "cybercomdemostorage1" --account-key $STORAGEKEY
+az storage container create --name "private2" --resource-group "cybercomdemogrp1" --account-name "cybercomdemostorage1" --account-key $STORAGEKEY
+
+# az group delete -n "cybercomdemogrp1"
+
+# Run from Azure Portal
+https://github.com/Azure/azure-quickstart-templates/tree/master/docker-simple-on-ubuntu
+
+# NotSecure2021!!
+
+
+
+

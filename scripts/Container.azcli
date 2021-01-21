@@ -1,0 +1,36 @@
+## Run in Powershell
+
+
+az acr create --resource-group "cybercomdemogrp1"--name "cybercomdemo1acr" --sku Basic --admin-enabled true
+
+az acr login --name "cybercomdemo1acr"
+
+az acr show --name "cybercomdemo1acr" --query loginServer --output table
+
+docker images
+
+docker build -t activityreader -f Dockerfile .
+
+docker tag activityreader:latest cybercomdemo1acr.azurecr.io/activityreader:1.0
+
+docker push cybercomdemo1acr.azurecr.io/activityreader:1.0
+
+
+
+# På VM:
+docker login cybercomdemo1acr.azurecr.io
+Username: cybercomdemo1acr
+Password: <ta från azure portal> / nJlgrZQW2oNU082q3=KMAuX0sONbTuJa
+docker pull cybercomdemo1acr.azurecr.io/consoleapp1:3.0
+
+
+# container instance - Powershell
+
+az acr show --name cybercomdemo1acr --query loginServer
+$acrUser = az acr credential show -n cybercomdemo1acr --query username
+$password = az acr credential show -n cybercomdemo1acr --query "passwords[0].value"  -o tsv
+
+az container create --resource-group cybercomdemogrp1 --name "cybercomdemo1aci" --restart-policy never  --image cybercomdemo1acr.azurecr.io/activityreader:1.0 --cpu 1 --memory 1 --registry-login-server cybercomdemo1acr.azurecr.io --registry-username $acrUser --registry-password $password --dns-name-label "cybercomdemo1acr" --ports 80 --os-type Linux 
+az container show --resource-group cybercomdemogrp1 --name "cybercomdemo1aci" --query instanceView.state
+
+az container logs --resource-group cybercomdemogrp1 --name "cybercomdemo1aci"
