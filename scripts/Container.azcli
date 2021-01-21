@@ -1,7 +1,7 @@
 ## Run in Powershell
 
 
-az acr create --resource-group "cybercomdemogrp1"--name "cybercomdemo1acr" --sku Basic --admin-enabled true
+az acr create --resource-group "cybercomdemogrp1" --name "cybercomdemo1acr" --sku Basic --admin-enabled true
 
 az acr login --name "cybercomdemo1acr"
 
